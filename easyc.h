@@ -4,6 +4,8 @@
 #define startEC __ecStart(__FUNCTION__)
 #define DATA_UNIT (9)
 #define DATA_SIZE (DATA_UNIT*5)
+#define MORE_STACK 0xf66c
+#define MORE_SLAVE 0xf77c
 
 typedef struct _master Master;
 typedef struct _slave Slave;
@@ -77,7 +79,8 @@ void __ecStart(const char* caller){
 		MainStack.stack = (char*) malloc(sizeof(char)*DATA_SIZE); // DATA_UNIT * 5 // 45 for now
 
 	}else{//something Better
-
+		puts("Ok ok..");
+//		if(caller ==
 	}
 }
 
