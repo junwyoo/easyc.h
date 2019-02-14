@@ -5,27 +5,23 @@
 
 #include "easyc.h"
 
-
-
-
 #define TRY do{ jmp_buf ex_buf__; if( !setjmp(ex_buf__) ){
 #define CATCH } else {
 #define ETRY } }while(0);
 #define THROW longjmp(ex_buf__, 1)
 
-
 /*-------------------------------implementation----------------------------*/
 
-void __ecStart(const char* caller){//gate way
+void __ecStart(const char* caller) {//gate way
 	if(caller ==NULL)return;
 	int i=0;
 	int isMain = 1;
 	const char* varifier = "main";
-	while(caller[i] != '\0'){
+	while(caller[i] != '\0') {
 		if(caller[i] == varifier[i]){i++;continue;}
 		else{isMain = 0;puts("not main");break;}}
 
-	if(isMain){// call from __main__
+	if(isMain) {// call from __main__
 		puts("initializing...");
 		// initialize mainLists and connect to GC
 		mainLists.n_added = 0;
@@ -35,36 +31,23 @@ void __ecStart(const char* caller){//gate way
 			mainLists.lists[i] = (List*) __safeMalloc(sizeof(List));
 			mainLists.lists[i]->head = NULL;
 		}
-
 		atexit(__garbageCollector);
-
-	}else{// call for more lists
+	} else {// call for more lists
 		puts("Ok ok..");
 	}
 }
 
 
-void* __safeMalloc(size_t n) // return NULL if fail
-{
+void* __safeMalloc(size_t n) { // return NULL if fail
 	void* vp = (void*) malloc((unsigned int) n);
 	if(vp == NULL)
 		return NULL;
 	return vp;
 }
 
-
 /*----------------------------------Lists-----------------------------------*/
 
-void newVar(const char* var, const char* caller) // _(variable_name)
-{
-
-//	Node* np = __safeMalloc(sizeof(Node));
-//	np->data = NULL;
-//	np->next = NULL;
-//	np->nextSame = NULL;
-
-
-
+void newVar(const char* var, const char* caller) { // _(variable_name)
 	List* lp = __safeMalloc(sizeof(List));
 
 	// initialize Helper Node
@@ -86,37 +69,29 @@ void newVar(const char* var, const char* caller) // _(variable_name)
 	return;
 }
 
-
-
-int addVar(List* lis, int amount)
-{
+int addVar(List* lis, int amount) {
 	return 0;
 
 }
 
-int intOrFl(const char* var)
-{
+int intOrFl(const char* var) {
 	printf("%s number to be analyzed\n", var);
 	return 0;
 }
 
-int getType(const size_t value,const size_t* addr)
-{
+int getType(const size_t value,const size_t* addr) {
 	char target[256];
 	char* floatZero = "0.0000000000000";
-//	puts("inside");
 	int j;
 	int i = sprintf(target, "%.13f", *addr);
 	printf("%d %.13f %d %d read to be analyzed\n", (target[0]),*addr, addr[0],i);
 	puts("");
 
-	for(j=0; j<9; j++)
-	{
-		if(target[j] == '\0'){
+	for(j=0; j<9; j++) {
+		if(target[j] == '\0') {
 			break;
 		}
-		if(target[j] != floatZero[j])
-		{
+		if(target[j] != floatZero[j]) {
 			puts("float");
 			return Flt;
 		}
@@ -124,8 +99,8 @@ int getType(const size_t value,const size_t* addr)
 
 	i = sprintf(target, "%d", addr[0]);
 	printf("%d --- %s-----\n", *addr, target);
-	for(j=0; j<i; j++){
-		if(target[j]-'0' != addr[j]){
+	for(j=0; j<i; j++) {
+		if(target[j]-'0' != addr[j]) {
 			puts("string");
 			return Str;
 		}
@@ -185,10 +160,7 @@ void __garbageCollector(){
 		}
 	}
 }
+
 /*----------------------------------end of gc---------------------------------------*/
 
 // for exception handle may use
-
-
-
-
