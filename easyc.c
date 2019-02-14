@@ -10,6 +10,8 @@
 #define ETRY } }while(0);
 #define THROW longjmp(ex_buf__, 1)
 
+// TO BE DELETED : puts(7) printf(4)
+
 /*-------------------------------implementation----------------------------*/
 
 void __ecStart(const char* caller) {//gate way
