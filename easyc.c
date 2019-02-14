@@ -13,13 +13,19 @@
 /*-------------------------------implementation----------------------------*/
 
 void __ecStart(const char* caller) {//gate way
-	if(caller ==NULL)return;
+	if(caller ==NULL) return;
 	int i=0;
 	int isMain = 1;
 	const char* varifier = "main";
 	while(caller[i] != '\0') {
-		if(caller[i] == varifier[i]){i++;continue;}
-		else{isMain = 0;puts("not main");break;}}
+		if(caller[i] == varifier[i]) { 
+		  i++; 
+		  continue;
+		} 
+		else {
+		  isMain = 0; 
+		  puts("not main"); 
+		  break; } }
 
 	if(isMain) {// call from __main__
 		puts("initializing...");
@@ -148,14 +154,13 @@ void __freeList(List* list){
 
 void __garbageCollector(){
 	int i, n;
-//	puts("collecting garbage...");
-	if(mainLists.lists == NULL){
+	if(mainLists.lists == NULL) {
 		return;
 	}
-//	printf("deleting %d lists...\n", mainLists.n_lists);
+	
 	n = mainLists.n_added;
-	for(i=0; i<n ; i++){
-		if(*mainLists.lists != NULL){
+	for(i=0; i<n ; i++) {
+		if(*mainLists.lists != NULL) {
 			__freeList(mainLists.lists[i]);
 		}
 	}
